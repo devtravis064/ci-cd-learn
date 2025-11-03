@@ -13,7 +13,7 @@ jobs:
         name: Checkout and Setup Node
         continue-on-error: true
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v5
             - uses: actions/setup-node@v3
               with:
                 node-version: ${{ env.NODE_VERSION }}
@@ -24,3 +24,12 @@ jobs:
         name: Notify Job
         steps:
             - run: echo "App is running on port ${{ env.PORT }}"
+    build_job:
+        runs-on: ubuntu-latest
+        name: Build Job
+        steps:
+            - uses: actions/checkout@v5
+            - run: echo "Building the application..."
+            - run: docker build . -t travisegang/cicd-learning:${{ github.sha }}
+              name: Build Docker Image
+            - run: docker images
