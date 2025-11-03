@@ -29,7 +29,8 @@ jobs:
         name: Build Job
         steps:
             - uses: actions/checkout@v5
-            - run: echo "Building the application..."
             - run: docker build . -t travisegang/cicd-learning:${{ github.sha }}
-              name: Build Docker Image
             - run: docker images
+            - run: docker login --username=${{ secrets.DOCKER_HUB_NAME }} --email=${{secrets.DOCKER_HUB_EMAIL}}
+            - run: docker push travisegang/cicd-learning:${{ github.sha }}
+    
