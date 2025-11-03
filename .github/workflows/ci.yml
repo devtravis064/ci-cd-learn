@@ -1,0 +1,21 @@
+name: CI-CD Pipeline Learning
+
+on:
+    push:
+        branches:
+            - main
+env:
+    NODE_VERSION: 22.0.0
+    PORT: 8000
+jobs:
+    unit_tests:
+        runs-on: ubuntu-latest
+        name: Checkout and Setup Node
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                node-version: ${{ env.NODE_VERSION }}
+            - run: echo "App is running on port ${{ env.PORT }}"
+            - run: npm run test
+
